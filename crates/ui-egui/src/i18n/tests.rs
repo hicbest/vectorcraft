@@ -110,7 +110,7 @@ fn lookups_fall_back_to_english() {
 
 #[test]
 fn catalog_kinds_are_parsed_and_looked_up() {
-    let c = Catalog::parse("# c\n\tHello\t你好\n@id\tfile.save\t儲存\nmenu\tWindows\t視窗們\n@plural\t{n} file|{n} files\t{n} 個檔案\n\n");
+    let c = Catalog::parse("# c\n\tHello\t你好\n@id\tfile.save\t儲存\nmenu\tWindows\t視窗們\n@plural\t{n} file|{n} files\t{n} 個檔案\n\n", false);
     assert_eq!(c.plain("Hello"), Some("你好"));
     assert_eq!(c.id("file.save"), Some("儲存"));
     assert_eq!(c.contextual("menu", "Windows"), Some("視窗們"));
@@ -268,6 +268,7 @@ fn is_cjk(c: char) -> bool {
 #[test]
 fn bundled_fonts_cover_the_catalogs() {
     let japanese_ui_font = vectorcraft_text::CRAFT_FONTS.iter().any(|f| f.is_japanese());
+    let arabic_ui_font = vectorcraft_text::CRAFT_FONTS.iter().any(|f| f.is_arabic());
     let ctx = egui::Context::default();
     crate::theme::install_fonts(&ctx);
     let mut output = ctx.run_ui(egui::RawInput::default(), |_| {});
@@ -280,9 +281,19 @@ fn bundled_fonts_cover_the_catalogs() {
             egui::FontFamily::Name(crate::theme::FONT_UI_SEMIBOLD.into()),
             egui::FontFamily::Name(crate::theme::FONT_MONO.into()),
         ];
-        for l in LANGUAGES.iter().filter(|l| !l.source.is_empty()) {
+        for l in LANGUAGES.iter().filter(|l| !l.source.is_empty() && l.code != "ar") {
             let (entries, _) = parse_entries(l.source);
+            if (l.code == "ja" && !japanese_ui_font) || (l.code == "ar" && !arabic_ui_font) {
+                continue;
+            }
             let cjk_checked = japanese_ui_font && l.code == "ja";
+
+            // Arabic glyphs come from craft-fonts at runtime (`add_craft_fonts`); without it,
+            // the catalog's Arabic falls back to installed system fonts. Same skip as Japanese.
+            let arabic_ui_font = vectorcraft_text::CRAFT_FONTS.iter().any(|f| f.is_arabic());
+            if l.code == "ar" && !arabic_ui_font {
+                continue;
+            }
             let chars: std::collections::BTreeSet<char> =
                 entries.iter().flat_map(|(_, _, tr)| tr.chars()).filter(|c| !c.is_whitespace() && (cjk_checked || !is_cjk(*c))).collect();
             for family in &families {
@@ -1049,14 +1060,17 @@ fn a_language_saved_by_an_older_version_carries_over() {
 
 #[test]
 fn messages_translate_by_template_and_their_parts() {
-    let c = Catalog::parse(concat!(
-        "@msg\tnothing selected\tnada seleccionado\n",
-        "@msg\t{path}: {e}\t{path}: {e}\n",
-        "@msg\tCouldn't open {name}: {e}\tNo se pudo abrir {name}: {e}\n",
-        "@msg\tcommand `{0}` is not available right now: {1}\tel comando `{0}` no está disponible ahora: {1}\n",
-        "@msg\t{a}{b}\tnever\n",
-        "@msg\t{n} of {total}\t{total} contiene {n}\n",
-    ));
+    let c = Catalog::parse(
+        concat!(
+            "@msg\tnothing selected\tnada seleccionado\n",
+            "@msg\t{path}: {e}\t{path}: {e}\n",
+            "@msg\tCouldn't open {name}: {e}\tNo se pudo abrir {name}: {e}\n",
+            "@msg\tcommand `{0}` is not available right now: {1}\tel comando `{0}` no está disponible ahora: {1}\n",
+            "@msg\t{a}{b}\tnever\n",
+            "@msg\t{n} of {total}\t{total} contiene {n}\n",
+        ),
+        false,
+    );
     assert_eq!(c.message("nothing selected").map(|m| m.0), Some("nada seleccionado"));
     // The template with the most literal text wins over the generic `{path}: {e}`.
     let (tr, caps) = c.message("Couldn't open a: b.svg: damaged").unwrap();
