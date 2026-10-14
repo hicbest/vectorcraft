@@ -1698,7 +1698,7 @@ lighting	Light	ضوء
 	Import Transparency Flattener Presets	استيراد إعدادات تجميع الشفافية المسبقة
 	In Tangent Handles	مقابض الظل الداخل
 	In the selected objects	في الكائنات المحددة
-	Include Bleed	تضمين الخروج
+	Include Bleed	تضمين النزيف
 	Include CMYK PostScript in RGB Files	تضمين PostScript CMYK في ملفات RGB
 	Include Document Thumbnails	تضمين مصغرات المستند
 	Include Hidden Layers	تضمين الطبقات المخفية
@@ -2977,9 +2977,9 @@ imageTrace	Outline	محيط
 	Bitmap	صورة نقطية
 	Black	أسود
 	BLANK DOCUMENT PRESETS	إعدادات المستندات الفارغة المسبقة
-	Bleed	خروج
-	Bleed:	الخروج:
-	Bleeds	خروج
+	Bleed	نزيف
+	Bleed:	النزيف:
+	Bleeds	نزيف
 	Blend Options	خيارات المزج
 	Blue	أزرق
 	Bottom:	الأسفل:
