@@ -181,6 +181,18 @@ fn bundled_catalogs_are_consistent() {
     }
 }
 
+#[test]
+#[ignore]
+fn dump_known_strings() {
+    let known: std::collections::BTreeSet<String> = crate::menus::menu_strings().into_iter().chain(tl_literals()).collect();
+    let mut out = String::new();
+    for s in &known {
+        out.push_str(s);
+        out.push('\n');
+    }
+    let _ = std::fs::write("/tmp/known_strings.txt", out);
+}
+
 /// A catalog that doesn't claim complete menus may still only hold strings the UI shows (menu
 /// labels, command labels, `tl!` literals), so labels from other apps don't creep in.
 #[test]

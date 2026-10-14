@@ -3919,3 +3919,35 @@ imageTrace	Outline	محيط
 @msg	unsupported native docking operation	عملية إرساء أصلية غير مدعومة
 @msg	zipped 32-bit PSD image data with prediction can't be read	بيانات صورة PSD 32 بت المضغوطة ZIP مع التنبؤ لا تُقرأ
 @msg	{depth}-bit PSD files in this colour mode can't be read	ملفات PSD بـ {depth} بت في وضع الألوان هذا لا تُقرأ
+	Ambient Light	ضوء محيطي
+	Bottom Left:	أسفل يسار:
+	Bottom Right:	أسفل يمين:
+	[1P-High View]	[1P-High View]
+	[1P-Low View]	[1P-Low View]
+	[1P-Normal View]	[1P-Normal View]
+	[2P-High View]	[2P-High View]
+	[2P-Low View]	[2P-Low View]
+	[2P-Normal View]	[2P-Normal View]
+	[3P-Low View]	[3P-Low View]
+	[3P-Normal View]	[3P-Normal View]
+	Automation	Automation
+	Drawer menu	قائمة الدرج
+	Enhanced	مُحسَّن
+	Essentials	Essentials
+	Essentials Classic	Essentials Classic
+	Layout	Layout
+	Light behind the object	ضوء خلف الكائن
+	OpenType	OpenType
+	Painting	Painting
+	Precise Cursors	مؤشرات دقيقة
+	Printing and Proofing	Printing and Proofing
+	Single Corner Radius	نصف قطر زاوية واحدة
+	Softness	النعومة
+	Toolbar: Show Controls	شريط الأدوات: إظهار عناصر التحكم
+	Top Left:	أعلى يسار:
+	Top Right:	أعلى يمين:
+	Tracing	Tracing
+	Typography	Typography
+	VectorCraft	VectorCraft
+	Web	Web
+	

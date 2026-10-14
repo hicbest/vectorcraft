@@ -293,7 +293,7 @@ pub static LANGUAGES: [LangInfo; 17] = [
         name: "العربية",
         source: include_str!("ar.tsv"),
         plural: plural_arabic,
-        complete_menus: false,
+        complete_menus: true,
         rtl: true,
         catalog: OnceLock::new(),
     },
