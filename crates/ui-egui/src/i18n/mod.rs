@@ -285,9 +285,10 @@ pub static LANGUAGES: [LangInfo; 17] = [
         rtl: false,
         catalog: OnceLock::new(),
     },
-    // Arabic: the whole interface, status and error messages; right-to-left, with six plural
-    // forms. `complete_menus: false` until the catalog covers every string `main` added after
-    // it was written (451 keys, tracked in #1532); untranslated keys show in English.
+    // Arabic: the whole interface, status and error messages; right-to-left (labels are
+    // reordered to visual order at catalog-build time, see `bidi.rs`), with six plural forms
+    // (zero|one|two|few|many|other) following CLDR. Clean-room, written from the English
+    // labels' meanings.
     LangInfo {
         code: "ar",
         name: "العربية",
